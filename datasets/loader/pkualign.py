@@ -8,6 +8,7 @@ from prompt.prompt import create_chat_prompt, create_prompt
 
 
 def tokenize(item, tokenizer, encoder_decoder=False):
+    # 1. Setup
     task = "safety"
     safe_id = item["safer_response_id"]
     target_answer = item[f"response_{safe_id}"]
@@ -17,16 +18,35 @@ def tokenize(item, tokenizer, encoder_decoder=False):
         task, few_shot=2, text=text_to_evaluate, chat_template=None
     )
 
-    conversation = [
+    # 3. Setup the Chat Dictionaries
+    prompt_only = [{"role": "user", "content": user_prompt}]
+    full_conversation = [
         {"role": "user", "content": user_prompt},
         {"role": "assistant", "content": target_answer},
     ]
 
-    input_ids = tokenizer.apply_chat_template(
-        conversation, tokenize=True, add_generation_prompt=False
+    prompt_ids = tokenizer.apply_chat_template(
+        prompt_only, tokenize=True, add_generation_prompt=True
     )
 
-    return {"input_ids": input_ids, "attention_mask": [1] * len(input_ids)}
+    input_ids = tokenizer.apply_chat_template(
+        full_conversation, tokenize=True, add_generation_prompt=False
+    )
+
+    # 5. Masking
+    # Create the labels: -100 for every token in the prompt, and the actual token IDs for the rest.
+    prompt_length = len(prompt_ids)
+    labels = ([-100] * prompt_length) + input_ids[prompt_length:]
+
+    if len(labels) != len(input_ids):
+        print("Warning: Token boundary mismatch detected. Applying safe fallback.")
+        labels = [-100] * len(input_ids)
+
+    return {
+        "input_ids": input_ids,
+        "labels": labels,
+        "attention_mask": [1] * len(input_ids),
+    }
 
 
 def get_split(dataset_config, tokenizer, split):
@@ -43,7 +63,7 @@ def get_split(dataset_config, tokenizer, split):
         )
     dataset = dataset.map(
         lambda item: tokenize(item, tokenizer, dataset_config.encoder_decoder),
-        batched=True,
+        batch=True,
         remove_columns=list(dataset.features),
     )
     return dataset

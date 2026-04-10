@@ -8,9 +8,14 @@ from models.fsdp import fsdp_auto_wrap_policy
 from configs import fsdp_config as FSDP_CONFIG
 from models.distillation_model import DistillationModel
 from optimum.bettertransformer import BetterTransformer
-from transformers import AutoModelForCausalLM, MT5ForConditionalGeneration, AutoTokenizer
-from configs.configs_utils import generate_peft_config, update_config
-from peft import get_peft_model, prepare_model_for_kbit_training
+from transformers import (
+    AutoModelForCausalLM, 
+    MT5ForConditionalGeneration, 
+    AutoTokenizer,
+    BitsAndBytesConfig  
+)
+from configs.configs_utils import update_config  
+from peft import get_peft_model, prepare_model_for_kbit_training, LoraConfig  
 from transformers.models.llama.modeling_llama import LlamaDecoderLayer
 from transformers.models.gpt_neox.modeling_gpt_neox import GPTNeoXLayer
 from transformers.models.mistral.modeling_mistral import MistralDecoderLayer
@@ -35,18 +40,24 @@ def load_tokenizer(name, encoder_decoder):
 
 def load_model(train_config, rank):
     use_cache = False if train_config.enable_fsdp else True
+    
+    q_config = BitsAndBytesConfig(
+        load_in_4bit=True, 
+        bnb_4bit_compute_dtype=torch.bfloat16
+    ) if train_config.quantization else None
+
     def load():
         if "mt0" in train_config.model_name:
             return MT5ForConditionalGeneration.from_pretrained(
                 train_config.model_name,
-                load_in_8bit=True if train_config.quantization else False,
+                quantization_config=q_config,
                 device_map="auto" if train_config.quantization else None,
                 use_cache=use_cache,
             )
         else:
             return AutoModelForCausalLM.from_pretrained(
                 train_config.model_name,
-                load_in_8bit=True if train_config.quantization else False,
+                quantization_config=q_config,
                 device_map="auto" if train_config.quantization else None,
                 use_cache=use_cache,
             )
@@ -83,7 +94,19 @@ def set_model(model, train_config, fsdp_config, rank, kwargs):
         model = prepare_model_for_kbit_training(model)
 
     if train_config.use_peft:
-        peft_config = generate_peft_config(train_config, kwargs)
+        peft_config = LoraConfig(
+            r=16,
+            lora_alpha=32,
+            target_modules=[
+                "q_proj",
+                "v_proj",
+                "k_proj",
+                "o_proj",
+            ],
+            lora_dropout=0.05,
+            bias="none",
+            task_type="CAUSAL_LM",
+        )
         model = get_peft_model(model, peft_config)
         model.print_trainable_parameters()
     elif train_config.freeze_layers:
