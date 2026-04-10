@@ -1,0 +1,148 @@
+_wandb:
+    value:
+        cli_version: 0.25.1
+        e:
+            bigrzt4xcegkrzdyu4wjhnchxwztnghz:
+                args:
+                    - --local-rank=0
+                    - --model_name
+                    - Qwen/Qwen2.5-3B
+                    - --dataset.file
+                    - datasets/loader/squad.py
+                    - --lr
+                    - "1e-6"
+                    - --num_epochs
+                    - "1"
+                    - --batch_size_training
+                    - "4"
+                    - --val_batch_size
+                    - "4"
+                    - --output_dir
+                    - train/output/path
+                    - --distillation_config.model_name
+                    - meta-llama/Llama-Guard-3-8B
+                    - --distillation
+                    - --distillation_config.enable_fsdp
+                    - --distillation_config.pure_bf16
+                    - --distillation_config.distil_factor
+                    - "1.5"
+                    - --save_step
+                    - "100"
+                codePath: finetuning.py
+                codePathLocal: finetuning.py
+                cpu_count: 6
+                cpu_count_logical: 12
+                cudaVersion: "13.0"
+                disk:
+                    /:
+                        total: "253055008768"
+                        used: "83979059200"
+                email: anshul.kaushal@lexsi.ai
+                executable: /usr/bin/python3
+                git:
+                    commit: ab6e79800d28a1820348d72fc43ad964bb51ac29
+                    remote: https://github.com/Nicolas-BZRD/llm-recipes.git
+                gpu: NVIDIA A100-SXM4-80GB
+                gpu_count: 1
+                gpu_nvidia:
+                    - architecture: Ampere
+                      cudaCores: 6912
+                      memoryTotal: "85899345920"
+                      name: NVIDIA A100-SXM4-80GB
+                      uuid: GPU-110a8313-2895-0d0f-a57a-e9614343d0c9
+                host: 3f1091f1d625
+                memory:
+                    total: "179370471424"
+                os: Linux-6.6.113+-x86_64-with-glibc2.35
+                program: /content/drive/MyDrive/Scripts/ULDLoss/llm-recipes/finetuning.py
+                python: CPython 3.12.13
+                root: /content/drive/MyDrive/Scripts/ULDLoss/llm-recipes
+                startedAt: "2026-04-07T16:10:03.584808Z"
+                writerId: bigrzt4xcegkrzdyu4wjhnchxwztnghz
+        m: []
+        python_version: 3.12.13
+        t:
+            "1":
+                - 1
+                - 2
+                - 3
+                - 5
+                - 11
+                - 12
+                - 41
+                - 49
+                - 51
+                - 53
+                - 71
+                - 98
+                - 99
+                - 105
+            "2":
+                - 1
+                - 2
+                - 3
+                - 5
+                - 11
+                - 12
+                - 41
+                - 49
+                - 51
+                - 53
+                - 71
+                - 98
+                - 99
+                - 105
+            "3":
+                - 13
+                - 16
+            "4": 3.12.13
+            "5": 0.25.1
+            "6": 4.48.0
+            "12": 0.25.1
+            "13": linux-x86_64
+batch_size_training:
+    value: 4
+cross_entropy_factor:
+    value: 1
+dataset:
+    value: squad.py
+distil_factor:
+    value: 1.5
+div_factor:
+    value: 2
+final_div_factor:
+    value: 5
+freeze_layers:
+    value: false
+gradient_accumulation_steps:
+    value: 1
+lr:
+    value: 1e-06
+mixed_precision:
+    value: true
+model_name:
+    value: Qwen2.5-3B
+num_epochs:
+    value: 1
+num_freeze_layers:
+    value: 1
+pct_start:
+    value: 0.1
+peft_method:
+    value: lora
+quantization:
+    value: false
+seed:
+    value: 42
+student_temperature:
+    value: 1
+teacher_temperature:
+    value: 1
+use_fp16:
+    value: false
+use_peft:
+    value: false
+val_batch_size:
+    value: 4
+weight_decay:
+    value: 0.1
