@@ -15,7 +15,7 @@ def tokenize(item, tokenizer, encoder_decoder=False):
     text_to_evaluate = item["prompt"]
 
     user_prompt = create_chat_prompt(
-        task, few_shot=2, text=text_to_evaluate, chat_template=None
+        task, few_shot=2, text=text_to_evaluate, chat_template=tokenizer.apply_chat_template
     )
 
     # 3. Setup the Chat Dictionaries
@@ -63,7 +63,6 @@ def get_split(dataset_config, tokenizer, split):
         )
     dataset = dataset.map(
         lambda item: tokenize(item, tokenizer, dataset_config.encoder_decoder),
-        batch=True,
         remove_columns=list(dataset.features),
     )
     return dataset

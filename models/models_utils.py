@@ -91,9 +91,11 @@ def load_model(train_config, rank):
 
 def set_model(model, train_config, fsdp_config, rank, kwargs):
     if train_config.quantization:
+        print("ADDED QUANTIZATION")
         model = prepare_model_for_kbit_training(model)
 
     if train_config.use_peft:
+        print("ADDED PEFT")
         peft_config = LoraConfig(
             r=16,
             lora_alpha=32,
