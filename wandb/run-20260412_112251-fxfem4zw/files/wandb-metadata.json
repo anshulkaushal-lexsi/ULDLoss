@@ -1,0 +1,67 @@
+{
+  "os": "Linux-5.15.0-94-generic-x86_64-with-glibc2.39",
+  "python": "CPython 3.12.3",
+  "startedAt": "2026-04-12T11:22:51.754922Z",
+  "args": [
+    "--local-rank=0",
+    "--model_name",
+    "Qwen/Qwen2.5-3B",
+    "--dataset.file",
+    "datasets/loader/pkualign.py",
+    "--lr",
+    "1e-6",
+    "--num_epochs",
+    "1",
+    "--batch_size_training",
+    "2",
+    "--val_batch_size",
+    "2",
+    "--output_dir",
+    "train/output/path",
+    "--distillation_config.model_name",
+    "meta-llama/Llama-Guard-3-8B",
+    "--distillation_config.quantization",
+    "True",
+    "--distillation_config.peft",
+    "True",
+    "--distillation_config.distil_factor",
+    "1.5",
+    "--save_step",
+    "10000"
+  ],
+  "program": "/home/jovyan/ULDLoss/finetuning.py",
+  "codePath": "finetuning.py",
+  "codePathLocal": "finetuning.py",
+  "git": {
+    "remote": "https://anshulkaushal-lexsi:@github.com/anshulkaushal-lexsi/ULDLoss.git",
+    "commit": "eac9aae2047a4db3732ed5f9dac53ba9f0ee9a73"
+  },
+  "email": "anshul.kaushal@lexsi.ai",
+  "root": "/home/jovyan/ULDLoss",
+  "host": "n-7602e1a7-b61e-476c-bf49-39a3a9ae632d-0",
+  "executable": "/usr/bin/python",
+  "cpu_count": 128,
+  "cpu_count_logical": 256,
+  "gpu": "NVIDIA L40S",
+  "gpu_count": 1,
+  "disk": {
+    "/": {
+      "total": "783097536512",
+      "used": "584825249792"
+    }
+  },
+  "memory": {
+    "total": "1217096450048"
+  },
+  "gpu_nvidia": [
+    {
+      "name": "NVIDIA L40S",
+      "memoryTotal": "48305799168",
+      "cudaCores": 18176,
+      "architecture": "Ada",
+      "uuid": "GPU-9e54e54e-0a31-fda4-2e38-820f7fcb0365"
+    }
+  ],
+  "cudaVersion": "12.8",
+  "writerId": "j8acmpkxx38efmv1do2xemljoc2nwmjd"
+}

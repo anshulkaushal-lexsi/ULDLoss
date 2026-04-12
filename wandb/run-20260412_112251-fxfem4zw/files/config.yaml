@@ -1,0 +1,141 @@
+_wandb:
+    value:
+        cli_version: 0.21.1
+        e:
+            j8acmpkxx38efmv1do2xemljoc2nwmjd:
+                args:
+                    - --local-rank=0
+                    - --model_name
+                    - Qwen/Qwen2.5-3B
+                    - --dataset.file
+                    - datasets/loader/pkualign.py
+                    - --lr
+                    - "1e-6"
+                    - --num_epochs
+                    - "1"
+                    - --batch_size_training
+                    - "2"
+                    - --val_batch_size
+                    - "2"
+                    - --output_dir
+                    - train/output/path
+                    - --distillation_config.model_name
+                    - meta-llama/Llama-Guard-3-8B
+                    - --distillation_config.quantization
+                    - "True"
+                    - --distillation_config.peft
+                    - "True"
+                    - --distillation_config.distil_factor
+                    - "1.5"
+                    - --save_step
+                    - "10000"
+                codePath: finetuning.py
+                codePathLocal: finetuning.py
+                cpu_count: 128
+                cpu_count_logical: 256
+                cudaVersion: "12.8"
+                disk:
+                    /:
+                        total: "783097536512"
+                        used: "584825249792"
+                email: anshul.kaushal@lexsi.ai
+                executable: /usr/bin/python
+                git:
+                    commit: eac9aae2047a4db3732ed5f9dac53ba9f0ee9a73
+                    remote: https://anshulkaushal-lexsi:@github.com/anshulkaushal-lexsi/ULDLoss.git
+                gpu: NVIDIA L40S
+                gpu_count: 1
+                gpu_nvidia:
+                    - architecture: Ada
+                      cudaCores: 18176
+                      memoryTotal: "48305799168"
+                      name: NVIDIA L40S
+                      uuid: GPU-9e54e54e-0a31-fda4-2e38-820f7fcb0365
+                host: n-7602e1a7-b61e-476c-bf49-39a3a9ae632d-0
+                memory:
+                    total: "1217096450048"
+                os: Linux-5.15.0-94-generic-x86_64-with-glibc2.39
+                program: /home/jovyan/ULDLoss/finetuning.py
+                python: CPython 3.12.3
+                root: /home/jovyan/ULDLoss
+                startedAt: "2026-04-12T11:22:51.754922Z"
+                writerId: j8acmpkxx38efmv1do2xemljoc2nwmjd
+        m: []
+        python_version: 3.12.3
+        t:
+            "1":
+                - 1
+                - 5
+                - 11
+                - 41
+                - 49
+                - 51
+                - 53
+                - 71
+                - 98
+                - 99
+            "2":
+                - 1
+                - 5
+                - 11
+                - 41
+                - 49
+                - 51
+                - 53
+                - 71
+                - 98
+                - 99
+            "3":
+                - 13
+                - 16
+            "4": 3.12.3
+            "5": 0.21.1
+            "6": 4.48.0
+            "12": 0.21.1
+            "13": linux-x86_64
+batch_size_training:
+    value: 2
+cross_entropy_factor:
+    value: -1
+dataset:
+    value: pkualign.py
+distil_factor:
+    value: -1
+div_factor:
+    value: 2
+final_div_factor:
+    value: 5
+freeze_layers:
+    value: false
+gradient_accumulation_steps:
+    value: 1
+lr:
+    value: 1e-06
+mixed_precision:
+    value: true
+model_name:
+    value: Qwen2.5-3B
+num_epochs:
+    value: 1
+num_freeze_layers:
+    value: 1
+pct_start:
+    value: 0.1
+peft_method:
+    value: lora
+quantization:
+    value: false
+seed:
+    value: 42
+student_temperature:
+    value: -1
+teacher_temperature:
+    value: -1
+use_fp16:
+    value: false
+use_peft:
+    value: false
+val_batch_size:
+    value: 2
+weight_decay:
+    value: 0.1
